@@ -1,0 +1,13 @@
+.mensagem-erro{
+    color: red;
+    font-weight: bold;
+    display: block;
+}
+li{
+    margin-bottom: 10px;
+}
+
+li button{
+    margin-left: 8px;
+}
+

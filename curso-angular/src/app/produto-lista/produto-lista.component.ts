@@ -9,30 +9,44 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './produto-lista.component.css'
 })
 export class ProdutoListaComponent {
-  nome: string = 'TV Tubalão';
 
   nomeProduto: string = '';
+  indiceAlterar:number = -1;
+  mensagemErro:string = "";
+  tituloBotaoSalvarProduto:string ='Cadastrar';
 
   produtos: Array<string> = [
-    // "iPhone 14",
-    // "Motorole G7",
-    // "Xiaomi 9",
-    // "Nokia"
+    "iPhone 14",
+    "Motorole G7",
+    "Xiaomi 9",
+    "Nokia"
   ]
 
-  cadastrarProduto(){
+  salvarProduto(){
+    this.mensagemErro = '';
+
+    if(this.nomeProduto.length < 3){
+      this.mensagemErro = "Nome não pode possuir menos de 3 caracteres";
+      return;
+    }
     //Verifica se o produto está cadastrado
     let existeProduto = this.produtos.some(x => x === this.nomeProduto);
+
     if(existeProduto === true){
-      alert('Produto já cadastrado')
+      this.mensagemErro = `Produto já cadastrado com o nome ! '${this.nomeProduto}'`;
       return;
     }
-    if(this.nomeProduto === ""){
-      alert('Nome não pode ser vazio')
-      return;
+    if(this.indiceAlterar === -1){
+      this.produtos.push(this.nomeProduto);
     }
-    //Cadastra o produto que o usuário preencheu no input na lista de produtos. 
-    this.produtos.push(this.nomeProduto);
+    else{
+      //alterar o nome do produto que o usuário escolheu para editar
+      this.produtos[this.indiceAlterar] = this.nomeProduto;
+      //reset para o usuario cadastrar novamente
+      this.indiceAlterar = -1;
+      //reset o texto do botão para cadastrar, para que o usuário saiba que está cadastrando um produto
+      this.tituloBotaoSalvarProduto = "Cadastrar";
+    }
     //Limpar o campo
     this.nomeProduto = "";
   }
@@ -41,5 +55,13 @@ export class ProdutoListaComponent {
     console.log(indiceProduto);
 
     this.produtos.splice(indiceProduto, 1);
+  }
+
+  editarProduto(nomeProduto:string){
+
+    this.indiceAlterar = this.produtos.findIndex(x => x === nomeProduto);
+    console.log(this.indiceAlterar);
+    this.nomeProduto = nomeProduto;
+    this.tituloBotaoSalvarProduto = 'Editar';
   }
 }
