@@ -1,0 +1,29 @@
+<p>Lista de clientes</p>
+@if(clientes.length === 0){
+    <div>
+        <span>Nenhum cliente cadastrado</span>
+    </div>
+}
+else{
+    <ul>
+        @for(cliente of clientes; track cliente){
+            <li>
+                <span>
+                    {{cliente}}
+                    <button (click) = "apagarCliente(cliente)">Apagar</button>
+                    <button (click) = "editarCliente(cliente)">Editar</button>
+                </span>
+            </li>
+        }
+    </ul>
+}
+
+<label for="nome">Nome</label>
+<input type="text" id="nome" [(ngModel)] = "nomeClienteInput">
+<button (click) = "salvarCliente()">Salvar</button>
+@if(mensagemErroCliente !== ""){
+    <div>
+        <span>Erro: {{mensagemErroCliente}}</span>
+    
+    </div>
+}
