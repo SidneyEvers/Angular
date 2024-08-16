@@ -1,6 +1,20 @@
-<h1>Listagem de clientes</h1>
+<h1>Olá Mundo!</h1>
 
+<nav>
+    <ul>
+        <li>
+            <a routerLink="/produtos" routerLinkActive="active" ariaCurrentWhenActive="page">Produtos</a>
+        </li>
+        <li>
+            <a routerLink="/clientes" routerLinkActive="active" ariaCurrentWhenActive="page">Clientes</a>
+        </li>
+        <li>
+            <a routerLink="/filmes" routerLinkActive="active" ariaCurrentWhenActive="page">Filmes</a>
+        </li>
+        <li>
+            <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+        </li>
+    </ul>
+</nav>
 
-<!-- <app-produto-lista></app-produto-lista> -->
-
-<app-cliente-lista></app-cliente-lista>
+<router-outlet></router-outlet>

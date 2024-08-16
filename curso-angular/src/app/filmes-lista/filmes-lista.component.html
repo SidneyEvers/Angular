@@ -1,0 +1,62 @@
+<h1>Lista de Filmes</h1>
+
+<button (click)="consultar()">Consultar</button>
+@if(carregandoFilmes === true){
+    <div>
+        <span>Carregando filmes</span>
+    </div>
+}@else{
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Orçamento</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(filme of filmes; track filme){
+            <tr>
+                <td>{{filme.id}}</td>
+                <td>{{filme.nome}}</td>
+                <td>{{filme.categoria}}</td>
+                <td>{{filme.orcamento}}</td>
+                <td>
+                    <button>Editar</button>
+                    <button (click)="apagar(filme.id)">Apagar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+<div>
+    <label for="nome">Nome</label>
+    <input type="text" id="nome" [(ngModel)] = "nome">
+</div>
+<div>
+    <label for="duracao">duracao</label>
+    <input type="number" id="nome" [(ngModel)] = "duracao">
+</div>
+<div>
+    <label for="lancamento">lancamento</label>
+    <input type="text" id="lancamento" [(ngModel)] = "lancamento">
+</div>
+<div>
+    <label for="Autor">Autor</label>
+    <input type="text" id="Autor" [(ngModel)] = "autor">
+</div>
+<div>
+    <label for="orcamento">Orçamento</label>
+    <input type="text" id="Orçamento" [(ngModel)] = "orcamento">
+</div>
+<div>
+    <label for="categoria">Categoria</label>
+    <input type="text" id="Categoria" [(ngModel)] = "categoria">
+</div>
+<button (click) = "salvar()">Salvar</button>
