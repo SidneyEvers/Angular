@@ -1,6 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { MenubarModule } from 'primeng/menubar';
+import { TableModule } from 'primeng/table';
 
 interface Filmes{
   id:number;
@@ -9,13 +17,24 @@ interface Filmes{
   lancamento:number;
   autor:string;
   orcamento:number;
-  categoria:string;
+  categoria:any;
 }
 
 @Component({
   selector: 'app-filmes-lista',
   standalone: true,
-  imports: [FormsModule], //formsModule faz a ligação entre campo - classe ou seja faz a conexão DOM das propriedades
+  imports: [
+    FormsModule, //formsModule faz a ligação entre campo - classe ou seja faz a conexão DOM das propriedades
+    ButtonModule,
+    TableModule,
+    DialogModule,
+    InputTextModule,
+    InputNumberModule,
+    CalendarModule,
+    DropdownModule,
+    MenubarModule 
+    
+  ],
   templateUrl: './filmes-lista.component.html',
   styleUrl: './filmes-lista.component.css'
 })
@@ -25,12 +44,19 @@ export class FilmesListaComponent {
     carregandoFilmes: boolean = false;
     httpClient: HttpClient;
 
+    categorias = [
+      {"id": "Terror","nome":"Terror"},
+      {"id":"Suspense","nome":"Suspense"},
+      {"id": "Ação", "nome":"Ação"},
+    ]
+
     nome:string = "";
     duracao:number = 0;
     lancamento:string = "";
     autor:string = "";
     orcamento:number = 0;
-    categoria:string = "";
+    categoria:any = "";
+    visible: boolean = false;
 
     constructor(httpCliente:HttpClient){
       this.httpClient = httpCliente;
@@ -64,7 +90,7 @@ export class FilmesListaComponent {
         autor: this.autor,
         lancamento: this.lancamento,
         orcamento: this.orcamento,
-        categoria: this.categoria
+        categoria: this.categoria["nome"]
       }
       this.httpClient.post("http://localhost:3000/filmes", dados)
       .subscribe(x => this.aposSalvar(x));
@@ -72,6 +98,7 @@ export class FilmesListaComponent {
     aposSalvar(x:any){
       this.limparCampos();
       this.consultar();
+      this.visible = false;
     }
 
     limparCampos(){
@@ -81,5 +108,11 @@ export class FilmesListaComponent {
       this.lancamento = "";
       this.orcamento = 0;
       this.categoria = "";
+    }
+    editar(){
+
+    }
+    showDialog(){
+      this.visible = true;
     }
 }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProdutoListaComponent } from './produto-lista/produto-lista.component';
 import { ClienteListaComponent } from './cliente-lista/cliente-lista.component';
 import { FilmesListaComponent } from './filmes-lista/filmes-lista.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +15,8 @@ import { FilmesListaComponent } from './filmes-lista/filmes-lista.component';
     RouterLinkActive,//Diretiva usada para aplicar classes CSS dinamicamente em um link
     RouterOutlet, //Componente Angular que atua como um componente de ancoragem ou contâiner onde os componentes serão renderizados
     FormsModule,
-    ProdutoListaComponent,
-    ClienteListaComponent,
-    FilmesListaComponent],
+    NavbarComponent],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

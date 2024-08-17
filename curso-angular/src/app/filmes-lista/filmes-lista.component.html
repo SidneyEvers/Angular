@@ -1,16 +1,18 @@
 <h1>Lista de Filmes</h1>
 
-<button (click)="consultar()">Consultar</button>
+<p-button (onClick)="consultar()" label="consultar" icon="pi pi-plus" size="small"/>
+<div class="flex justify-content-end flex-wrap mr-5 pb-3">
+    <p-button (onClick)="showDialog()" label="Cadastrar" icon="pi pi-plus" size="small"/>
+</div>
+
 @if(carregandoFilmes === true){
     <div>
         <span>Carregando filmes</span>
     </div>
 }@else{
 
-
-
-<table>
-    <thead>
+<p-table [value]="filmes" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
         <tr>
             <th>Código</th>
             <th>Nome</th>
@@ -18,45 +20,69 @@
             <th>Orçamento</th>
             <th>Ações</th>
         </tr>
-    </thead>
-    <tbody>
-        @for(filme of filmes; track filme){
-            <tr>
-                <td>{{filme.id}}</td>
-                <td>{{filme.nome}}</td>
-                <td>{{filme.categoria}}</td>
-                <td>{{filme.orcamento}}</td>
-                <td>
-                    <button>Editar</button>
-                    <button (click)="apagar(filme.id)">Apagar</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    </ng-template>
+    <ng-template pTemplate="body" let-filme>
+        <tr>
+            <td>{{filme.id}}</td>
+            <td>{{filme.nome}}</td>
+            <td>{{filme.categoria}}</td>
+            <td>{{filme.orcamento}}</td>
+            <td>
+                <p-button (click)="editar()" label="Editar" severity="primary" icon="pi pi-check" class="mr-3"/>
+                <p-button (click)="apagar(filme.id)" label="Apagar" severity="danger" icon="pi pi-trash"/>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
 }
-<div>
-    <label for="nome">Nome</label>
-    <input type="text" id="nome" [(ngModel)] = "nome">
-</div>
-<div>
-    <label for="duracao">duracao</label>
-    <input type="number" id="nome" [(ngModel)] = "duracao">
-</div>
-<div>
-    <label for="lancamento">lancamento</label>
-    <input type="text" id="lancamento" [(ngModel)] = "lancamento">
-</div>
-<div>
-    <label for="Autor">Autor</label>
-    <input type="text" id="Autor" [(ngModel)] = "autor">
-</div>
-<div>
-    <label for="orcamento">Orçamento</label>
-    <input type="text" id="Orçamento" [(ngModel)] = "orcamento">
-</div>
-<div>
-    <label for="categoria">Categoria</label>
-    <input type="text" id="Categoria" [(ngModel)] = "categoria">
-</div>
-<button (click) = "salvar()">Salvar</button>
+
+<p-dialog header="Cadastro" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }" 
+[breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <span class="p-text-secondary block mb-5">Cadastre o filme</span>
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="nome" class="font-semibold w-6rem">Nome</label>
+        <input pInputText id="nome" class="flex-auto"  [(ngModel)] = "nome" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="duracao" class="font-semibold w-6rem">Duração</label>
+        <p-inputNumber 
+            [(ngModel)]="duracao" 
+            inputId="duracao" 
+            mode="decimal" 
+            [min]="30" 
+            [max]="300" /> 
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="lancamento" class="font-semibold w-6rem">Lançamento</label>
+        <p-calendar [(ngModel)]="lancamento" inputId="lancamento0" appendTo="body" view="year" dateFormat="yy" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="autor" class="font-semibold w-6rem">Autor</label>
+        <input pInputText id="autor" class="flex-auto"  [(ngModel)]="autor" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="orcamento" class="font-semibold w-6rem">Orçamento</label>
+        <p-inputNumber 
+            [(ngModel)]="orcamento" 
+            inputId="orcamento" 
+            mode="currency" 
+            currency="BRL" 
+            locale="pt-BR"/> 
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="categoria" class="font-semibold w-6rem">Categoria</label>
+        <p-dropdown 
+            [options]="categorias" 
+            [(ngModel)]="categoria" 
+            optionLabel="nome" 
+            [filter]="true"
+            filterBy="nome"
+            appendTo="body"
+            placeholder="Escolha uma categoria" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="danger" (onClick)="visible = false" />
+        <p-button (click)="salvar()" label="Salvar" severity="success" icon="pi pi-check"/>
+    </div>
+</p-dialog>
+
