@@ -1,5 +1,7 @@
-<h1>Lista de Filmes</h1>
+<p-toast />
+<p-confirmDialog />
 
+<h1>Lista de Filmes</h1>
 <p-button (onClick)="consultar()" label="consultar" icon="pi pi-plus" size="small"/>
 <div class="flex justify-content-end flex-wrap mr-5 pb-3">
     <p-button (onClick)="showDialog()" label="Cadastrar" icon="pi pi-plus" size="small"/>
@@ -28,9 +30,10 @@
             <td>{{filme.categoria}}</td>
             <td>{{filme.orcamento}}</td>
             <td>
-                <p-button (click)="editar()" label="Editar" severity="primary" icon="pi pi-check" class="mr-3"/>
-                <p-button (click)="apagar(filme.id)" label="Apagar" severity="danger" icon="pi pi-trash"/>
-            </td>
+                <p-button (click)="editar(filme.id)" label="Editar" severity="primary" icon="pi pi-check" class="mr-3"/>
+                <p-button (click)="apagar(filme)" label="Apagar" severity="danger" icon="pi pi-trash"/>
+                
+            </td>   
         </tr>
     </ng-template>
 </p-table>
